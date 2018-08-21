@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # R E T R O  C L O C K by mozcelikors
-# based on Digital Clock by Le Sanglier des Ardennes
+# based on Digital Clock by HorlogeNumerique
 
 import os, sys, pygame
 from pygame.locals import *
@@ -19,12 +19,14 @@ animations = ["frame1.png", "frame2.png", "frame3.png", "frame4.png", "frame5.pn
 
 # One cycle toggling variable
 k=0
+w=0 # weather refresh counter
 
 city = 'IZMIR'
 
 def main():
     global i
     global k
+    global w
 
     size = width, height = 800, 480
     screen = pygame.display.set_mode(size)
@@ -77,7 +79,7 @@ def main():
 
 
         # Weather info - get every 1 cycle
-        if (i==0):
+        if (w==0):
             weather = Weather (unit=Unit.CELSIUS)
             location = weather.lookup_by_location(city)
             condition = location.condition
@@ -101,6 +103,12 @@ def main():
                 k = 0
         else:
             i = i+1
+
+   
+        if (w>5000):
+            w = 0
+        else:
+            w = w + 1
 
 
         if k==0:
