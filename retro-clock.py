@@ -129,12 +129,9 @@ def main():
 
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
             fontimg = font.render(condition.temp + "\'C " + condition.text , 1, fontcolor)
-            fontimg_rect = fontimg.get_rect(center=(1*width/3,4.5*height/5))
-            cityimg_rect = fontimg.get_rect(center=(1*width/3,3.8*height/5))
             
-            
-            screen.blit(cityimg, cityimg_rect)
-            screen.blit(fontimg, fontimg_rect)
+            screen.blit(cityimg, [80, 320])
+            screen.blit(fontimg, [80, 390])
 
         
         pygame.display.update() 
