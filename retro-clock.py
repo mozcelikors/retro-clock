@@ -12,6 +12,8 @@ from weather import Weather, Unit
 
 #For animation
 i = 0
+
+base_dir = '/home/pi/retro-clock/'
 animation_folder = "frames/"
 animations = ["frame1.png", "frame2.png", "frame3.png", "frame4.png", "frame5.png", "frame6.png", "frame7.png", "frame8.png", "frame9.png", "frame10.png", "frame11.png", "frame12.png", "frame13.png", "frame14.png", "frame15.png", "frame16.png", "frame17.png", "frame18.png", "frame19.png", "frame20.png", "frame21.png", "frame22.png", "frame23.png", "frame24.png", "frame25.png", "frame26.png", "frame27.png", "frame28.png", "frame29.png", "frame30.png", "frame31.png", "frame32.png", "frame33.png", "frame34.png", "frame35.png", "frame36.png", "frame37.png"]
 
@@ -52,7 +54,7 @@ def main():
     fontcolor = 128, 214, 255
     fontsize = 100
 
-    font = pygame.font.Font("fonts/trs-million.ttf", fontsize)
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", fontsize)
 
     #commandeDate = ["date", "+%Y-%m-%d %H:%M:%S.%N"]
     commandeDate = ["date", "+%S.%N"]
@@ -65,7 +67,7 @@ def main():
     while 1:
 
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == QUIT or event.type == pygame.MOUSEBUTTONUP:
                sys.exit(0)
 
         #screen.fill(black)
@@ -77,7 +79,7 @@ def main():
         # Weather info - get every 1 cycle
         if (i==0):
             weather = Weather (unit=Unit.CELSIUS)
-            location = weather.lookup_by_location('izmir')
+            location = weather.lookup_by_location(city)
             condition = location.condition
             print (condition.text)
             print (condition.temp)
@@ -89,7 +91,7 @@ def main():
         dt = str(now - delta)
         clock = dt[11:19]
 
-        animation = pygame.image.load (animation_folder + animations[i])
+        animation = pygame.image.load (base_dir + animation_folder + animations[i])
         screen.blit (animation, [0,0])
         if i>35:
             i = 0
@@ -102,22 +104,22 @@ def main():
 
 
         if k==0:
-            font = pygame.font.Font("fonts/trs-million.ttf", fontsize)
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", fontsize)
             fontimg = font.render(clock, 1, fontcolor)
             fontimg_rect = fontimg.get_rect(center=(1.3*width/3,4.3*height/5))
             screen.blit(fontimg, fontimg_rect)
 
-            clockicon = pygame.image.load ("clock.png")
+            clockicon = pygame.image.load (base_dir + "clock.png")
             screen.blit(clockicon,[20,3.8*height/5])
         else:
             
-            tempicon = pygame.image.load ("temp.png")
+            tempicon = pygame.image.load (base_dir + "temp.png")
             screen.blit (tempicon, [20, 3.8*height/5])
 
-            font = pygame.font.Font("fonts/trs-million.ttf", 70)
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
             cityimg = font.render (city, 1, fontcolor) 
 
-            font = pygame.font.Font("fonts/trs-million.ttf", 70)
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
             fontimg = font.render(condition.temp + "\'C " + condition.text , 1, fontcolor)
             fontimg_rect = fontimg.get_rect(center=(1*width/3,4.5*height/5))
             cityimg_rect = fontimg.get_rect(center=(1*width/3,3.8*height/5))
