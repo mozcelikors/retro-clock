@@ -97,10 +97,6 @@ def main():
         screen.blit (animation, [0,0])
         if i>35:
             i = 0
-            if (k==0):
-                k = 1
-            else:
-                k = 0
         else:
             i = i+1
 
@@ -111,18 +107,24 @@ def main():
             w = w + 1
 
 
-        if k==0:
+        if (k>200):
+            k = 0
+        else:
+            k = k + 1
+
+
+        if (k<120):
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", fontsize)
             fontimg = font.render(clock, 1, fontcolor)
             fontimg_rect = fontimg.get_rect(center=(1.3*width/3,4.3*height/5))
-            screen.blit(fontimg, fontimg_rect)
+            screen.blit(fontimg, [130, 3.65*height/5])
 
             clockicon = pygame.image.load (base_dir + "clock.png")
             screen.blit(clockicon,[20,3.8*height/5])
         else:
             
             tempicon = pygame.image.load (base_dir + "temp.png")
-            screen.blit (tempicon, [20, 3.8*height/5])
+            screen.blit (tempicon, [20, 3.3*height/5])
 
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
             cityimg = font.render (city, 1, fontcolor) 
@@ -130,8 +132,8 @@ def main():
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
             fontimg = font.render(condition.temp + "\'C " + condition.text , 1, fontcolor)
             
-            screen.blit(cityimg, [80, 320])
-            screen.blit(fontimg, [80, 390])
+            screen.blit(cityimg, [100, 320])
+            screen.blit(fontimg, [100, 390])
 
         
         pygame.display.update() 
