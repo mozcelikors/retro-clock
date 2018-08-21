@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # R E T R O  C L O C K by mozcelikors
-# based on Digital Clock by HorlogeNumerique
+# based on Digital Clock by Le Sanglier des Ardennes
 
 import os, sys, pygame
 from pygame.locals import *
