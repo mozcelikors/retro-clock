@@ -124,7 +124,7 @@ def main():
             clockicon = pygame.image.load (base_dir + "clock.png")
             screen.blit(clockicon,[20,3.8*height/5])
 
-        elif (k<220):
+        elif (k<200):
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 90)
             fontimg = font.render(date, 1, fontcolor)
             screen.blit(fontimg, [140, 310])
