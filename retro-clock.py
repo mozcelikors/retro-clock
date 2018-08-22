@@ -87,6 +87,8 @@ def main():
             print (condition.temp)
 
         now = datetime.datetime.today()
+
+        date = now.strftime("%H %b %Y")
         secPython = float(str(now)[17:26])
 
 
@@ -107,7 +109,7 @@ def main():
             w = w + 1
 
 
-        if (k>200):
+        if (k>300):
             k = 0
         else:
             k = k + 1
@@ -121,6 +123,18 @@ def main():
 
             clockicon = pygame.image.load (base_dir + "clock.png")
             screen.blit(clockicon,[20,3.8*height/5])
+
+        elif (k<220):
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 90)
+            fontimg = font.render(date, 1, fontcolor)
+            screen.blit(fontimg, [140, 310])
+
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
+            fontimg = font.render(now.strftime("%A"), 1, fontcolor)
+            screen.blit(fontimg, [140, 400])
+
+            calendaricon = pygame.image.load (base_dir + "calendar.png")
+            screen.blit(calendaricon,[0,3.5*height/5])
         else:
             
             tempicon = pygame.image.load (base_dir + "temp.png")
