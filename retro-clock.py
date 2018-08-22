@@ -134,7 +134,7 @@ def main():
             screen.blit(fontimg, [140, 400])
 
             calendaricon = pygame.image.load (base_dir + "calendar.png")
-            screen.blit(calendaricon,[0,3.5*height/5])
+            screen.blit(calendaricon,[10,3.55*height/5])
         else:
             
             tempicon = pygame.image.load (base_dir + "temp.png")
