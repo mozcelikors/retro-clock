@@ -10,15 +10,13 @@ from subprocess import *
 #weather-api
 from weather import Weather, Unit
 
-#For animation
-i = 0
-
 base_dir = '/home/pi/retro-clock/'
 animation_folder = "frames/"
 animations = ["frame1.png", "frame2.png", "frame3.png", "frame4.png", "frame5.png", "frame6.png", "frame7.png", "frame8.png", "frame9.png", "frame10.png", "frame11.png", "frame12.png", "frame13.png", "frame14.png", "frame15.png", "frame16.png", "frame17.png", "frame18.png", "frame19.png", "frame20.png", "frame21.png", "frame22.png", "frame23.png", "frame24.png", "frame25.png", "frame26.png", "frame27.png", "frame28.png", "frame29.png", "frame30.png", "frame31.png", "frame32.png", "frame33.png", "frame34.png", "frame35.png", "frame36.png", "frame37.png"]
 
-# One cycle toggling variable
-k=0
+# Counters for timing & scheduling
+i=0 # animation frame counter
+k=0 # one cycle counter
 w=0 # weather refresh counter
 
 city = 'IZMIR'
@@ -80,7 +78,7 @@ def main():
         #screen.blit(texture, [0,0])
 
 
-        # Weather info - get every 1 cycle
+        # Weather info - get every 1 weather cycle
         if (w==0):
             try:
                 weather = Weather (unit=Unit.CELSIUS)
@@ -102,25 +100,27 @@ def main():
 
         animation = pygame.image.load (base_dir + animation_folder + animations[i])
         screen.blit (animation, [0,0])
+
+        # Animation timer
         if i>35:
             i = 0
         else:
             i = i+1
 
-   
+        # Weather request timer
         if (w>5000):
             w = 0
         else:
             w = w + 1
 
-
+        # One cycle timer
         if (k>300):
             k = 0
         else:
             k = k + 1
 
 
-        if (k<120):
+        if (k<120): #Clock
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", fontsize)
             fontimg = font.render(clock, 1, fontcolor)
             fontimg_rect = fontimg.get_rect(center=(1.3*width/3,4.3*height/5))
@@ -129,7 +129,7 @@ def main():
             clockicon = pygame.image.load (base_dir + "clock.png")
             screen.blit(clockicon,[20,3.8*height/5])
 
-        elif (k<200):
+        elif (k<200): #Calendar
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 90)
             fontimg = font.render(date, 1, fontcolor)
             screen.blit(fontimg, [140, 310])
@@ -140,7 +140,7 @@ def main():
 
             calendaricon = pygame.image.load (base_dir + "calendar.png")
             screen.blit(calendaricon,[10,3.55*height/5])
-        else:
+        else: #Temperature
             
             tempicon = pygame.image.load (base_dir + "temp.png")
             screen.blit (tempicon, [20, 3.3*height/5])
@@ -153,7 +153,6 @@ def main():
             
             screen.blit(cityimg, [100, 320])
             screen.blit(fontimg, [100, 390])
-
 
             # Show weather icon if text matches and if text is short enough to display an icon
             if condition.text == "Sunny" :
@@ -168,6 +167,37 @@ def main():
             elif condition.text == "Snowy" or condition.text == "Snow":
                  weathericon = pygame.image.load (base_dir + "weathericons/snowy.png")
                  screen.blit (weathericon, [590, 3.35*height/5])
+
+
+        # Welcome to a new day!
+        hrm = now.strftime("%H:%M")
+        if (hrm == "00:00" or hrm == "23:59" or hrm == "00:01"):
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+            fontimg = font.render("Welcome to a new day", 1, (255, 227, 89))
+            screen.blit(fontimg, [100, 80])
+            
+            #Balloon image and animation
+            if (i/15 == 0):
+                balloonicon = pygame.image.load (base_dir + "balloon.png")
+                screen.blit (balloonicon, [350,170])
+            else:
+                balloonicon = pygame.image.load (base_dir + "balloon.png")
+                screen.blit (balloonicon, [350,150])
+
+
+        # A new hour welcomes you!
+        elif (now.strftime("%M") == "00"):
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+            fontimg = font.render("A new hour welcomes you", 1, (255, 227, 89))
+            screen.blit(fontimg, [90, 80])
+            
+            #Balloon image and animation
+            if (i/15 == 0): 
+                balloonicon = pygame.image.load (base_dir + "balloon.png")
+                screen.blit (balloonicon, [350,170])
+            else: 
+                balloonicon = pygame.image.load (base_dir + "balloon.png")
+                screen.blit (balloonicon, [350,150])
 
         pygame.display.update() 
         pygame.time.delay(70)
