@@ -135,7 +135,21 @@ def main():
             screen.blit(cityimg, [100, 320])
             screen.blit(fontimg, [100, 390])
 
-        
+
+            # Show weather icon if text matches and if text is short enough to display an icon
+            if condition.text == "Sunny" :
+                 weathericon = pygame.image.load (base_dir + "weathericons/sunny.png")
+                 screen.blit (weathericon, [590, 3.35*height/5])
+            elif condition.text == "Cloudy" or condition.text == "Windy" or condition.text == "Clear" or condition.text == "Cold":
+                 weathericon = pygame.image.load (base_dir + "weathericons/cloudy.png")
+                 screen.blit (weathericon, [590, 3.35*height/5])
+            elif condition.text == "Rainy" or condition.text == "Showers":
+                 weathericon = pygame.image.load (base_dir + "weathericons/rainy.png")
+                 screen.blit (weathericon, [590, 3.35*height/5])
+            elif condition.text == "Snowy" or condition.text == "Snow":
+                 weathericon = pygame.image.load (base_dir + "weathericons/snowy.png")
+                 screen.blit (weathericon, [590, 3.35*height/5])
+
         pygame.display.update() 
         pygame.time.delay(70)
         
