@@ -7,3 +7,5 @@ Clock functionality is based upon digital clock by Le Sanglier des Ardennes
 
 
 ![retro-clock screenshot](https://raw.githubusercontent.com/mozcelikors/retro-clock/master/screenshots/screenshots.png)
+
+![retro-clock screenshot](https://raw.githubusercontent.com/mozcelikors/retro-clock/master/screenshots/screenshots2.png)
