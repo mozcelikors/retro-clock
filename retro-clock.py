@@ -42,12 +42,14 @@ def main():
     pygame.init()
 
     #Get weather
-    weather = Weather (unit=Unit.CELSIUS)
-    location = weather.lookup_by_location(city)
-    condition = location.condition
-    print (condition.text)
-    print (condition.temp)
-
+    try:
+        weather = Weather (unit=Unit.CELSIUS)
+        location = weather.lookup_by_location(city)
+        condition = location.condition
+        print (condition.text)
+        print (condition.temp)
+    except Exception as err:
+        print (err)
    
     black = 0, 0, 0
     white = 255, 255, 255
@@ -80,11 +82,14 @@ def main():
 
         # Weather info - get every 1 cycle
         if (w==0):
-            weather = Weather (unit=Unit.CELSIUS)
-            location = weather.lookup_by_location(city)
-            condition = location.condition
-            print (condition.text)
-            print (condition.temp)
+            try:
+                weather = Weather (unit=Unit.CELSIUS)
+                location = weather.lookup_by_location(city)
+                condition = location.condition
+                print (condition.text)
+                print (condition.temp)
+            except Exception as err:
+                print (err)
 
         now = datetime.datetime.today()
 
