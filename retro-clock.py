@@ -88,7 +88,7 @@ def main():
 
         now = datetime.datetime.today()
 
-        date = now.strftime("%H %b %Y")
+        date = now.strftime("%d %b %Y")
         secPython = float(str(now)[17:26])
 
 
