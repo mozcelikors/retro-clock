@@ -199,18 +199,30 @@ def main():
             screen.blit(clockicon,[540,30])
 
             # Show weather icon if text matches and if text is short enough to display an icon
-            if weathercondition == "Sunny" :
+            if weathercondition == "Sunny" or weathercondition == "Mostly Sunny":
                  weathericon = pygame.image.load (base_dir + "weathericons/sunny.png")
-                 screen.blit (weathericon, [590, 3.35*height/5])
-            elif weathercondition == "Cloudy" or weathercondition == "Windy" or weathercondition == "Clear" or weathercondition == "Cold":
+                 if len(weathercondition) > 8:
+                     screen.blit (weathericon, [590, 245])
+                 else:
+                     screen.blit (weathericon, [590, 3.35*height/5])
+            elif weathercondition == "Cloudy" or weathercondition == "Mostly Cloudy" or weathercondition == "Partly Cloudy" or weathercondition == "Fair" or weathercondition == "Foggy" or weathercondition == "Windy" or weathercondition == "Clear" or weathercondition == "Cold":
                  weathericon = pygame.image.load (base_dir + "weathericons/cloudy.png")
-                 screen.blit (weathericon, [590, 3.35*height/5])
-            elif weathercondition == "Rainy" or weathercondition == "Showers":
+                 if len(weathercondition) > 8:
+                     screen.blit (weathericon, [590, 245])
+                 else:
+                     screen.blit (weathericon, [590, 3.35*height/5])
+            elif weathercondition == "Rainy" or weathercondition == "Showers" or weathercondition == "Thundershowers" or weathercondition == "Freezing Rain" or weathercondition == "Mixed Rain and Snow":
                  weathericon = pygame.image.load (base_dir + "weathericons/rainy.png")
-                 screen.blit (weathericon, [590, 3.35*height/5])
-            elif weathercondition == "Snowy" or weathercondition == "Snow":
+                 if len(weathercondition) > 8:
+                     screen.blit (weathericon, [590, 245])
+                 else:
+                     screen.blit (weathericon, [590, 3.35*height/5])
+            elif weathercondition == "Snowy" or weathercondition == "Snow" or weathercondition == "Snow Showers" or weathercondition == "Heavy Snow":
                  weathericon = pygame.image.load (base_dir + "weathericons/snowy.png")
-                 screen.blit (weathericon, [590, 3.35*height/5])
+                 if len(weathercondition) > 8:
+                     screen.blit (weathericon, [590, 245])
+                 else:
+                     screen.blit (weathericon, [590, 3.35*height/5])
 
 
         # Welcome to a new day!
