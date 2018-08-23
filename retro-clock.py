@@ -255,7 +255,7 @@ def main():
                 screen.blit (balloonicon, [350,150])
 
         # A new hour welcomes you!
-        elif (now.strftime("%M") == "27" and temperature != "N/A"):
+        elif (now.strftime("%M") == "00" and temperature != "N/A"):
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
             fontimg = font.render("A new hour welcomes you", 1, fontcolor2)
             screen.blit(fontimg, [90, 90])
