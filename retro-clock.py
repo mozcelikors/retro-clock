@@ -140,6 +140,15 @@ def main():
 
             calendaricon = pygame.image.load (base_dir + "calendar.png")
             screen.blit(calendaricon,[10,3.55*height/5])
+             
+            #Clock on corner
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
+            fontimg = font.render(clock, 1, fontcolor)
+            screen.blit(fontimg, [610,30])
+            clockicon = pygame.image.load (base_dir + "clocksmall.png")
+            screen.blit(clockicon,[540,30])
+
+
         else: #Temperature
             
             tempicon = pygame.image.load (base_dir + "temp.png")
@@ -153,6 +162,13 @@ def main():
             
             screen.blit(cityimg, [100, 320])
             screen.blit(fontimg, [100, 390])
+
+            #Clock on corner
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
+            fontimg = font.render(clock, 1, fontcolor)
+            screen.blit(fontimg, [610,30])
+            clockicon = pygame.image.load (base_dir + "clocksmall.png")
+            screen.blit(clockicon,[540,30])
 
             # Show weather icon if text matches and if text is short enough to display an icon
             if condition.text == "Sunny" :
