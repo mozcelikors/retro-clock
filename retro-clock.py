@@ -138,7 +138,7 @@ def main():
             fontimg = font.render(now.strftime("%A"), 1, fontcolor)
             screen.blit(fontimg, [140, 400])
 
-            calendaricon = pygame.image.load (base_dir + "calendar.png")
+            calendaricon = pygame.image.load (base_dir + "mario.png")
             screen.blit(calendaricon,[10,3.55*height/5])
              
             #Clock on corner
