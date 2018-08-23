@@ -149,7 +149,7 @@ def main():
             screen.blit(fontimg, [175, 330])
 
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
-            fontimg = font.render(now.strftime("%A"), 1, fontcolor)
+            fontimg = font.render(now.strftime("%A"), 1, fontcolor2)
             screen.blit(fontimg, [175, 400])
 
             calendaricon = pygame.image.load (base_dir + "calendar.png")
@@ -178,7 +178,7 @@ def main():
             else:
                 #If weather data obtained successfully
                 font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
-                fontimg = font.render(temperature + "\'C " + weathercondition , 1, fontcolor)
+                fontimg = font.render(temperature + "\'C " + weathercondition , 1, fontcolor2)
             
             screen.blit(cityimg, [100, 320])
             screen.blit(fontimg, [100, 390])
