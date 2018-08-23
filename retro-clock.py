@@ -224,10 +224,24 @@ def main():
                  else:
                      screen.blit (weathericon, [590, 3.35*height/5])
 
+        hrm = now.strftime("%H:%M")
+
+        # Happy new year
+        if (now.strftime("%d%m") == "0101"):
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+            fontimg = font.render("HAPPY NEW YEAR!!!", 1, (255, 163, 245))
+            screen.blit(fontimg, [195, 90])
+
+            #Balloon image and animation
+            if (i/15 == 0):
+                balloonicon = pygame.image.load (base_dir + "balloon.png")
+                screen.blit (balloonicon, [350,170])
+            else:
+                balloonicon = pygame.image.load (base_dir + "balloon.png")
+                screen.blit (balloonicon, [350,150])
 
         # Welcome to a new day!
-        hrm = now.strftime("%H:%M")
-        if ((hrm == "00:00" or hrm == "23:59" or hrm == "00:01") and temperature != "N/A"):
+        elif ((hrm == "00:00" or hrm == "23:59" or hrm == "00:01") and temperature != "N/A"):
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
             fontimg = font.render("Welcome to a new day", 1, fontcolor2)
             screen.blit(fontimg, [100, 80])
@@ -240,12 +254,11 @@ def main():
                 balloonicon = pygame.image.load (base_dir + "balloon.png")
                 screen.blit (balloonicon, [350,150])
 
-
         # A new hour welcomes you!
-        elif (now.strftime("%M") == "00" and temperature != "N/A"):
+        elif (now.strftime("%M") == "27" and temperature != "N/A"):
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
             fontimg = font.render("A new hour welcomes you", 1, fontcolor2)
-            screen.blit(fontimg, [90, 80])
+            screen.blit(fontimg, [90, 90])
             
             #Balloon image and animation
             if (i/15 == 0): 
