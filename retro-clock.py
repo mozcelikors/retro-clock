@@ -108,19 +108,19 @@ def main():
             i = i+1
 
         # Weather request timer
-        if (w>5000):
+        if (w>7000):
             w = 0
         else:
             w = w + 1
 
         # One cycle timer
-        if (k>300):
+        if (k>500):
             k = 0
         else:
             k = k + 1
 
 
-        if (k<120): #Clock
+        if (k<200): #Clock
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", fontsize)
             fontimg = font.render(clock, 1, fontcolor)
             fontimg_rect = fontimg.get_rect(center=(1.3*width/3,4.3*height/5))
@@ -129,7 +129,7 @@ def main():
             clockicon = pygame.image.load (base_dir + "clock.png")
             screen.blit(clockicon,[20,3.8*height/5])
 
-        elif (k<200): #Calendar
+        elif (k<350): #Calendar
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 90)
             fontimg = font.render(date, 1, fontcolor)
             screen.blit(fontimg, [140, 310])
@@ -216,7 +216,7 @@ def main():
                 screen.blit (balloonicon, [350,150])
 
         pygame.display.update() 
-        pygame.time.delay(70)
+        pygame.time.delay(35)
         
         # Compute delta
         out=Popen(commandeDate,stdout=PIPE)
