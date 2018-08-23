@@ -130,15 +130,15 @@ def main():
             screen.blit(clockicon,[20,3.8*height/5])
 
         elif (k<350): #Calendar
-            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 90)
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
             fontimg = font.render(date, 1, fontcolor)
-            screen.blit(fontimg, [140, 310])
+            screen.blit(fontimg, [175, 330])
 
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
             fontimg = font.render(now.strftime("%A"), 1, fontcolor)
-            screen.blit(fontimg, [140, 400])
+            screen.blit(fontimg, [175, 400])
 
-            calendaricon = pygame.image.load (base_dir + "mario.png")
+            calendaricon = pygame.image.load (base_dir + "calendar.png")
             screen.blit(calendaricon,[10,3.55*height/5])
              
             #Clock on corner
