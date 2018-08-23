@@ -88,6 +88,8 @@ def main():
         #screen.blit(texture, [0,0])
 
 
+
+
         # Weather info - get every 1 weather cycle
         if (w==0):
             try:
@@ -114,6 +116,12 @@ def main():
 
         animation = pygame.image.load (base_dir + animation_folder + animations[i])
         screen.blit (animation, [0,0])
+
+        if temperature == "N/A":
+            # Connection lost logo, if connection is lost
+            connlosticon = pygame.image.load (base_dir + "connlost.png")
+            screen.blit(connlosticon,[20, 30])
+
 
         # Animation timer
         if i>35:
@@ -207,7 +215,7 @@ def main():
 
         # Welcome to a new day!
         hrm = now.strftime("%H:%M")
-        if (hrm == "00:00" or hrm == "23:59" or hrm == "00:01"):
+        if ((hrm == "00:00" or hrm == "23:59" or hrm == "00:01") and temperature != "N/A"):
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
             fontimg = font.render("Welcome to a new day", 1, fontcolor2)
             screen.blit(fontimg, [100, 80])
@@ -222,7 +230,7 @@ def main():
 
 
         # A new hour welcomes you!
-        elif (now.strftime("%M") == "00"):
+        elif (now.strftime("%M") == "00" and temperature != "N/A"):
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
             fontimg = font.render("A new hour welcomes you", 1, fontcolor2)
             screen.blit(fontimg, [90, 80])
