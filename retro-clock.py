@@ -253,20 +253,7 @@ def main():
             else:
                 balloonicon = pygame.image.load (base_dir + "balloon.png")
                 screen.blit (balloonicon, [350,150])
-
-        # A new hour welcomes you!
-        elif (now.strftime("%M") == "00" and temperature != "N/A"):
-            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
-            fontimg = font.render("A new hour welcomes you", 1, fontcolor2)
-            screen.blit(fontimg, [90, 90])
-            
-            #Balloon image and animation
-            if (i/15 == 0): 
-                balloonicon = pygame.image.load (base_dir + "balloon.png")
-                screen.blit (balloonicon, [350,170])
-            else: 
-                balloonicon = pygame.image.load (base_dir + "balloon.png")
-                screen.blit (balloonicon, [350,150])
+       
 
         pygame.display.update() 
         pygame.time.delay(35)
