@@ -7,6 +7,9 @@ from pygame.locals import *
 import datetime
 from subprocess import *
 
+#forex-python currency api
+from forex_python.converter import CurrencyRates
+
 #weather-api
 from weather import Weather, Unit
 
@@ -18,16 +21,22 @@ animations = ["frame1.png", "frame2.png", "frame3.png", "frame4.png", "frame5.pn
 i=0 # animation frame counter
 k=0 # one cycle counter
 w=0 # weather refresh counter
+c=0 # exchange rate refresh counter
 
 # Weather variables
 city = 'IZMIR'
 temperature = "N/A"
 weathercondition = " "
 
+# Currency variables
+usd_in_try = "N/A"
+eur_in_try = "N/A"
+
 def main():
     global i
     global k
     global w
+    global c
     global temperature
     global weathercondition
 
@@ -89,6 +98,15 @@ def main():
 
 
 
+        # Exchange rate info 
+        if (c==0):
+            try:
+                currate = CurrencyRates()
+                usd_in_try = currate.get_rate('USD', 'TRY')
+                eur_in_try = currate.get_rate('EUR', 'TRY')
+            except Exception as error:
+                usd_in_try = "N/A"
+                eur_in_try = "N/A"
 
         # Weather info - get every 1 weather cycle
         if (w==0):
@@ -117,7 +135,7 @@ def main():
         animation = pygame.image.load (base_dir + animation_folder + animations[i])
         screen.blit (animation, [0,0])
 
-        if temperature == "N/A":
+        if temperature == "N/A" or usd_in_try == "N/A":
             # Connection lost logo, if connection is lost
             connlosticon = pygame.image.load (base_dir + "connlost.png")
             screen.blit(connlosticon,[20, 30])
@@ -129,6 +147,12 @@ def main():
         else:
             i = i+1
 
+        # Exchange rate timer
+        if (c>1000):
+            c = 0
+        else:
+            c = c + 1
+
         # Weather request timer
         if (w>7000):
             w = 0
@@ -136,7 +160,7 @@ def main():
             w = w + 1
 
         # One cycle timer
-        if (k>500):
+        if (k>650):
             k = 0
         else:
             k = k + 1
@@ -171,7 +195,7 @@ def main():
             screen.blit(clockicon,[540,30])
 
 
-        else: #Temperature
+        elif (k<500): #Temperature
             
             tempicon = pygame.image.load (base_dir + "temp.png")
             screen.blit (tempicon, [20, 3.3*height/5])
@@ -223,6 +247,35 @@ def main():
                      screen.blit (weathericon, [590, 245])
                  else:
                      screen.blit (weathericon, [590, 3.35*height/5])
+
+        else: # Currency rates
+
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
+            fontimg = font.render("USD:", 1, fontcolor2)
+            screen.blit(fontimg, [175, 330])
+
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
+            fontimg = font.render("EUR:" , 1, fontcolor2)
+            screen.blit(fontimg, [175, 400])
+
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
+            fontimg = font.render(str(usd_in_try)+" TRY", 1, fontcolor)
+            screen.blit(fontimg, [320, 330])
+
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
+            fontimg = font.render(str(eur_in_try)+" TRY" , 1, fontcolor)
+            screen.blit(fontimg, [320, 400])
+
+            calendaricon = pygame.image.load (base_dir + "currency.png")
+            screen.blit(calendaricon,[10,3.55*height/5])
+
+            #Clock on corner
+            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
+            fontimg = font.render(clock, 1, fontcolor)
+            screen.blit(fontimg, [610,30])
+            clockicon = pygame.image.load (base_dir + "clocksmall.png")
+            screen.blit(clockicon,[540,30])
+
 
         hrm = now.strftime("%H:%M")
 
