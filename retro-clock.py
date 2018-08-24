@@ -251,11 +251,11 @@ def main():
         else: # Currency rates
 
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
-            fontimg = font.render("USD:", 1, fontcolor2)
+            fontimg = font.render("USD", 1, fontcolor2)
             screen.blit(fontimg, [175, 330])
 
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
-            fontimg = font.render("EUR:" , 1, fontcolor2)
+            fontimg = font.render("EUR" , 1, fontcolor2)
             screen.blit(fontimg, [175, 400])
 
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
@@ -267,7 +267,7 @@ def main():
             screen.blit(fontimg, [320, 400])
 
             calendaricon = pygame.image.load (base_dir + "currency.png")
-            screen.blit(calendaricon,[10,3.55*height/5])
+            screen.blit(calendaricon,[30,3.66*height/5])
 
             #Clock on corner
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
