@@ -32,13 +32,68 @@ weathercondition = " "
 usd_in_try = "N/A"
 eur_in_try = "N/A"
 
+black = 0, 0, 0
+white = 255, 255, 255
+red = 255, 0, 0
+
+fontcolor = 128, 214, 255
+fontcolor2 = 255, 227, 89
+fontsize = 100
+
+
+def clock_scene():
+    global fontsize
+    global clock
+    global width
+    global height
+    global screen
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", fontsize)
+    fontimg = font.render(clock, 1, fontcolor)
+    fontimg_rect = fontimg.get_rect(center=(1.3*width/3,4.3*height/5))
+    screen.blit(fontimg, [130, 3.65*height/5])
+
+    clockicon = pygame.image.load (base_dir + "clock.png")
+    screen.blit(clockicon,[20,3.8*height/5])
+
+def calendar_scene():
+    global fontsize
+    global date
+    global now
+    global width
+    global height
+    global screen
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
+    fontimg = font.render(date, 1, fontcolor)
+    screen.blit(fontimg, [175, 330])
+
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
+    fontimg = font.render(now.strftime("%A"), 1, fontcolor2)
+    screen.blit(fontimg, [175, 400])
+
+    calendaricon = pygame.image.load (base_dir + "calendar.png")
+    screen.blit(calendaricon,[10,3.55*height/5])
+
+    #Clock on corner
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
+    fontimg = font.render(clock, 1, fontcolor)
+    screen.blit(fontimg, [610,30])
+    clockicon = pygame.image.load (base_dir + "clocksmall.png")
+    screen.blit(clockicon,[540,30])
+
 def main():
+    global fontsize
     global i
     global k
     global w
     global c
     global temperature
     global weathercondition
+    global clock
+    global date
+    global width
+    global height
+    global screen
+    global now
 
     size = width, height = 800, 480
     screen = pygame.display.set_mode(size)
@@ -160,42 +215,22 @@ def main():
             w = w + 1
 
         # One cycle timer
-        if (k>650):
+        if (k>600):
             k = 0
         else:
             k = k + 1
 
 
-        if (k<200): #Clock
-            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", fontsize)
-            fontimg = font.render(clock, 1, fontcolor)
-            fontimg_rect = fontimg.get_rect(center=(1.3*width/3,4.3*height/5))
-            screen.blit(fontimg, [130, 3.65*height/5])
+        if (k<100): #Clock
+            clock_scene()
 
-            clockicon = pygame.image.load (base_dir + "clock.png")
-            screen.blit(clockicon,[20,3.8*height/5])
+        elif (k<200): #Calendar
+            calendar_scene()
 
-        elif (k<350): #Calendar
-            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
-            fontimg = font.render(date, 1, fontcolor)
-            screen.blit(fontimg, [175, 330])
+        elif (k<300):
+            clock_scene()
 
-            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 60)
-            fontimg = font.render(now.strftime("%A"), 1, fontcolor2)
-            screen.blit(fontimg, [175, 400])
-
-            calendaricon = pygame.image.load (base_dir + "calendar.png")
-            screen.blit(calendaricon,[10,3.55*height/5])
-             
-            #Clock on corner
-            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
-            fontimg = font.render(clock, 1, fontcolor)
-            screen.blit(fontimg, [610,30])
-            clockicon = pygame.image.load (base_dir + "clocksmall.png")
-            screen.blit(clockicon,[540,30])
-
-
-        elif (k<500): #Temperature
+        elif (k<400): #Temperature
             
             tempicon = pygame.image.load (base_dir + "temp.png")
             screen.blit (tempicon, [20, 3.3*height/5])
@@ -247,6 +282,8 @@ def main():
                      screen.blit (weathericon, [590, 245])
                  else:
                      screen.blit (weathericon, [590, 3.35*height/5])
+        elif (k<500):
+            clock_scene()
 
         else: # Currency rates
 
