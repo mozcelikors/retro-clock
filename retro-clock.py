@@ -6,6 +6,7 @@ import os, sys, pygame
 from pygame.locals import *
 import datetime
 from subprocess import *
+import threading
 
 #forex-python currency api
 from forex_python.converter import CurrencyRates
@@ -39,6 +40,37 @@ red = 255, 0, 0
 fontcolor = 128, 214, 255
 fontcolor2 = 255, 227, 89
 fontsize = 100
+
+def retrieve_weather():
+    global weathercondition
+    global temperature
+
+    #Get weather
+    try:
+        weather = Weather (unit=Unit.CELSIUS)
+        location = weather.lookup_by_location(city)
+        condition = location.condition
+        temperature = condition.temp
+        weathercondition = condition.text
+        print (temperature)
+        print (weathercondition)
+    except Exception as err:
+        temperature = "N/A"
+        weathercondition = " "
+        print (err)
+
+
+def retrieve_currency():
+    global usd_in_try
+    global eur_in_try
+
+    try:
+        currate = CurrencyRates()
+        usd_in_try = currate.get_rate('USD', 'TRY')
+        eur_in_try = currate.get_rate('EUR', 'TRY')
+    except Exception as error:
+        usd_in_try = "N/A"
+        eur_in_try = "N/A"
 
 
 def clock_scene():
@@ -109,18 +141,7 @@ def main():
     pygame.init()
 
     #Get weather
-    try:
-        weather = Weather (unit=Unit.CELSIUS)
-        location = weather.lookup_by_location(city)
-        condition = location.condition
-        temperature = condition.temp
-        weathercondition = condition.text
-        print (temperature)
-        print (weathercondition)
-    except Exception as err:
-        temperature = "N/A"
-        weathercondition = " "
-        print (err)
+    retrieve_weather()
    
     black = 0, 0, 0
     white = 255, 255, 255
@@ -155,28 +176,11 @@ def main():
 
         # Exchange rate info 
         if (c==0):
-            try:
-                currate = CurrencyRates()
-                usd_in_try = currate.get_rate('USD', 'TRY')
-                eur_in_try = currate.get_rate('EUR', 'TRY')
-            except Exception as error:
-                usd_in_try = "N/A"
-                eur_in_try = "N/A"
+            threading.Thread(target=retrieve_currency).start()
 
         # Weather info - get every 1 weather cycle
         if (w==0):
-            try:
-                weather = Weather (unit=Unit.CELSIUS)
-                location = weather.lookup_by_location(city)
-                condition = location.condition
-                temperature = condition.temp
-                weathercondition = condition.text
-                print (temperature)
-                print (weathercondition)
-            except Exception as err:
-                print (err)
-                temperature = "N/A"
-                weathercondition = " "
+            threading.Thread(target=retrieve_weather).start()
 
         now = datetime.datetime.today()
 
