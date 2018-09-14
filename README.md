@@ -1,9 +1,14 @@
 retro-clock
 =============
 
-All improvements, animation scripts, and clock&temperature reader design belong to mozcelikors
+About
+----------------------------
 
+All improvements, animation scripts, and clock, temperature reading, calendar design and implementations are done by Mustafa Ozcelikors.
 Clock functionality is based upon digital clock by Le Sanglier des Ardennes
+
+Installation and Screenshots
+----------------------------
 
 Install weather-api and forex_python Python modules using:
 
