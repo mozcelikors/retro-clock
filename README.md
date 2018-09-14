@@ -5,6 +5,12 @@ All improvements, animation scripts, and clock&temperature reader design belong 
 
 Clock functionality is based upon digital clock by Le Sanglier des Ardennes
 
+Install weather-api and forex_python Python modules using:
+
+```
+pip install weather-api
+pip install forex_python
+```
 
 ![retro-clock screenshot](https://raw.githubusercontent.com/mozcelikors/retro-clock/master/screenshots/screenshots.png)
 
