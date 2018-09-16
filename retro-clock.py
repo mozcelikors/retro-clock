@@ -33,6 +33,9 @@ weathercondition = " "
 usd_in_try = "N/A"
 eur_in_try = "N/A"
 
+# Music playing flag
+f_music_playing = 0
+
 black = 0, 0, 0
 white = 255, 255, 255
 red = 255, 0, 0
@@ -72,6 +75,34 @@ def retrieve_currency():
         usd_in_try = "N/A"
         eur_in_try = "N/A"
 
+def music_scene():
+    global fontsize
+    global clock
+    global width
+    global height
+    global screen
+    musicicon = pygame.image.load (base_dir + "music.png")
+    screen.blit (musicicon, [0, 3.3*height/5])
+
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 55)
+    nowplayingimg = font.render ("Now Playing:", 1, fontcolor)
+
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+    artistnameimg = font.render("Yuka Kitamura" , 1, fontcolor2)
+
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+    songnameimg = font.render("Dark Souls 3 Theme" , 1, fontcolor2)
+
+    screen.blit(nowplayingimg, [120, 300]) #300
+    screen.blit(artistnameimg, [120, 365])
+    screen.blit(songnameimg, [120, 420])
+
+    #Clock on corner
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
+    fontimg = font.render(clock, 1, fontcolor)
+    screen.blit(fontimg, [610,30])
+    clockicon = pygame.image.load (base_dir + "clocksmall.png")
+    screen.blit(clockicon,[540,30])
 
 def clock_scene():
     global fontsize
@@ -112,6 +143,65 @@ def calendar_scene():
     clockicon = pygame.image.load (base_dir + "clocksmall.png")
     screen.blit(clockicon,[540,30])
 
+def weather_scene():
+    global fontsize
+    global temperature
+    global weathercondition
+    global now
+    global width
+    global height
+    global screen
+    tempicon = pygame.image.load (base_dir + "temp.png")
+    screen.blit (tempicon, [20, 3.3*height/5])
+
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
+    cityimg = font.render (city, 1, fontcolor)
+
+    if temperature == "N/A":
+        #If weather data is not available
+        font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
+        fontimg = font.render("NO WEATHER DATA" , 1, fontcolor2)
+    else:
+        #If weather data obtained successfully
+        font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
+        fontimg = font.render(temperature + "\'C " + weathercondition , 1, fontcolor2)
+
+    screen.blit(cityimg, [100, 320])
+    screen.blit(fontimg, [100, 390])
+
+    #Clock on corner
+    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
+    fontimg = font.render(clock, 1, fontcolor)
+    screen.blit(fontimg, [610,30])
+    clockicon = pygame.image.load (base_dir + "clocksmall.png")
+    screen.blit(clockicon,[540,30])
+
+    # Show weather icon if text matches and if text is short enough to display an icon
+    if weathercondition == "Sunny" or weathercondition == "Mostly Sunny":
+         weathericon = pygame.image.load (base_dir + "weathericons/sunny.png")
+         if len(weathercondition) > 8:
+             screen.blit (weathericon, [590, 245])
+         else:
+             screen.blit (weathericon, [590, 3.35*height/5])
+    elif weathercondition == "Cloudy" or weathercondition == "Mostly Cloudy" or weathercondition == "Partly Cloudy" or weathercondition == "Fair" or weathercondition == "Foggy" or weathercondition == "Windy" or weathercondition == "Clear" or weathercondition == "Cold":
+         weathericon = pygame.image.load (base_dir + "weathericons/cloudy.png")
+         if len(weathercondition) > 8:
+             screen.blit (weathericon, [590, 245])
+         else:
+             screen.blit (weathericon, [590, 3.35*height/5])
+    elif weathercondition == "Rainy" or weathercondition == "Showers" or weathercondition == "Thundershowers" or weathercondition == "Freezing Rain" or weathercondition == "Mixed Rain and Snow":
+         weathericon = pygame.image.load (base_dir + "weathericons/rainy.png")
+         if len(weathercondition) > 8:
+             screen.blit (weathericon, [590, 245])
+         else:
+             screen.blit (weathericon, [590, 3.35*height/5])
+    elif weathercondition == "Snowy" or weathercondition == "Snow" or weathercondition == "Snow Showers" or weathercondition == "Heavy Snow":
+         weathericon = pygame.image.load (base_dir + "weathericons/snowy.png")
+         if len(weathercondition) > 8:
+             screen.blit (weathericon, [590, 245])
+         else:
+             screen.blit (weathericon, [590, 3.35*height/5])
+
 def main():
     global fontsize
     global i
@@ -135,14 +225,14 @@ def main():
     icon.set_alpha(0)
     pygame.display.set_icon(icon)
 
-    
+
     pygame.display.set_caption("Retro Clock")
 
     pygame.init()
 
     #Get weather
     retrieve_weather()
-   
+
     black = 0, 0, 0
     white = 255, 255, 255
     red = 255, 0, 0
@@ -174,7 +264,7 @@ def main():
 
 
 
-        # Exchange rate info 
+        # Exchange rate info
         if (c==0):
             threading.Thread(target=retrieve_currency).start()
 
@@ -224,8 +314,11 @@ def main():
         else:
             k = k + 1
 
+        # Add scenes
+        if (f_music_playing==1): # If bluetooth is connected for A2DP, then we prioritize it
+            music_scene()
 
-        if (k<100): #Clock
+        elif (k<100): #Clock
             clock_scene()
 
         elif (k<200): #Calendar
@@ -235,57 +328,8 @@ def main():
             clock_scene()
 
         elif (k<400): #Temperature
-            
-            tempicon = pygame.image.load (base_dir + "temp.png")
-            screen.blit (tempicon, [20, 3.3*height/5])
+            weather_scene()
 
-            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
-            cityimg = font.render (city, 1, fontcolor) 
-
-            if temperature == "N/A":
-                #If weather data is not available
-                font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
-                fontimg = font.render("NO WEATHER DATA" , 1, fontcolor2)
-            else:
-                #If weather data obtained successfully
-                font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 70)
-                fontimg = font.render(temperature + "\'C " + weathercondition , 1, fontcolor2)
-            
-            screen.blit(cityimg, [100, 320])
-            screen.blit(fontimg, [100, 390])
-
-            #Clock on corner
-            font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 40)
-            fontimg = font.render(clock, 1, fontcolor)
-            screen.blit(fontimg, [610,30])
-            clockicon = pygame.image.load (base_dir + "clocksmall.png")
-            screen.blit(clockicon,[540,30])
-
-            # Show weather icon if text matches and if text is short enough to display an icon
-            if weathercondition == "Sunny" or weathercondition == "Mostly Sunny":
-                 weathericon = pygame.image.load (base_dir + "weathericons/sunny.png")
-                 if len(weathercondition) > 8:
-                     screen.blit (weathericon, [590, 245])
-                 else:
-                     screen.blit (weathericon, [590, 3.35*height/5])
-            elif weathercondition == "Cloudy" or weathercondition == "Mostly Cloudy" or weathercondition == "Partly Cloudy" or weathercondition == "Fair" or weathercondition == "Foggy" or weathercondition == "Windy" or weathercondition == "Clear" or weathercondition == "Cold":
-                 weathericon = pygame.image.load (base_dir + "weathericons/cloudy.png")
-                 if len(weathercondition) > 8:
-                     screen.blit (weathericon, [590, 245])
-                 else:
-                     screen.blit (weathericon, [590, 3.35*height/5])
-            elif weathercondition == "Rainy" or weathercondition == "Showers" or weathercondition == "Thundershowers" or weathercondition == "Freezing Rain" or weathercondition == "Mixed Rain and Snow":
-                 weathericon = pygame.image.load (base_dir + "weathericons/rainy.png")
-                 if len(weathercondition) > 8:
-                     screen.blit (weathericon, [590, 245])
-                 else:
-                     screen.blit (weathericon, [590, 3.35*height/5])
-            elif weathercondition == "Snowy" or weathercondition == "Snow" or weathercondition == "Snow Showers" or weathercondition == "Heavy Snow":
-                 weathericon = pygame.image.load (base_dir + "weathericons/snowy.png")
-                 if len(weathercondition) > 8:
-                     screen.blit (weathericon, [590, 245])
-                 else:
-                     screen.blit (weathericon, [590, 3.35*height/5])
         elif (k<500):
             clock_scene()
 
@@ -339,7 +383,7 @@ def main():
             font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
             fontimg = font.render("Welcome to a new day", 1, fontcolor2)
             screen.blit(fontimg, [100, 80])
-            
+
             #Balloon image and animation
             if (i/15 == 0):
                 balloonicon = pygame.image.load (base_dir + "balloon.png")
@@ -347,11 +391,11 @@ def main():
             else:
                 balloonicon = pygame.image.load (base_dir + "balloon.png")
                 screen.blit (balloonicon, [350,150])
-       
 
-        pygame.display.update() 
+
+        pygame.display.update()
         pygame.time.delay(35)
-        
+
         # Compute delta
         out=Popen(commandeDate,stdout=PIPE)
         (secUnix,serr)=out.communicate()
@@ -363,5 +407,5 @@ def main():
         if alarm1 == str(now)[0:19]:
             print "Alarm"
 
-if __name__ == '__main__': 
-    main()    
+if __name__ == '__main__':
+    main()
