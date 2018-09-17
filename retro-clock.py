@@ -87,11 +87,21 @@ def music_scene():
     font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 55)
     nowplayingimg = font.render ("Now Playing:", 1, fontcolor)
 
-    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
-    artistnameimg = font.render("Yuka Kitamura" , 1, fontcolor2)
+    artistname = "Yuki Katamura"
+    if len(artistname)>23:
+        font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+        artistnameimg = font.render(artistname[0:23]+"..." , 1, fontcolor2)
+    else:
+        font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+        artistnameimg = font.render(artistname , 1, fontcolor2)
 
-    font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
-    songnameimg = font.render("Dark Souls 3 Theme" , 1, fontcolor2)
+    songname = "Dark Souls 3 Theme"
+    if len(songname)>23:
+        font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+        songnameimg = font.render(songname[0:23]+"..." , 1, fontcolor2)
+    else:
+        font = pygame.font.Font(base_dir + "fonts/trs-million.ttf", 50)
+        songnameimg = font.render(songname , 1, fontcolor2)
 
     screen.blit(nowplayingimg, [120, 300]) #300
     screen.blit(artistnameimg, [120, 365])
